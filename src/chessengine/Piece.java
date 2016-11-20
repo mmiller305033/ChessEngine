@@ -14,23 +14,30 @@ import java.util.ArrayList;
 public abstract class Piece {
     
    int moveCount;
-   int [] currentPos;
-   ArrayList<int []> moveHistory;
+   int Row;
+   int Col;
+   ArrayList<int []> pieceHistory;
     
-   public Piece(int [] STARTPOS){
+   public Piece(int row, int column){
        moveCount = 0;
-       currentPos = STARTPOS;
+       Row = row;
+       Col = column;
    }
    
-   public void move(int row, int col, Board board){
-       if(isValidMove(row,col, board)){
-           currentPos[0] = row;
-           currentPos[1] = col;
-           moveHistory.add(currentPos);
+   public void move(int row, int column, Board board){
+       if(isValidMove(row, column, board)){
+           Row = row;
+           Col = column;
+           int [] arr = new int [2];
+           arr[0] = row;
+           arr[1] = column;
+           pieceHistory.add(arr);
        }
    }
    
-   public abstract boolean isValidMove(int row, int col, Board board);
+   @Override
+   public abstract String toString();
+   public abstract boolean isValidMove(int row, int column, Board board);
    public abstract ArrayList<int []> getValidMoves();
    
 }
