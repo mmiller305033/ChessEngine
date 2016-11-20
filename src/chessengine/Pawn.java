@@ -5,6 +5,7 @@
  */
 package chessengine;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -14,14 +15,19 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
     private boolean direction; //true = up | false = down
     
-    public Pawn(int row, int column, boolean DIRECTION) {
-        super(row, column);
+    public Pawn(Color c, boolean DIRECTION) {
+        super(c);
         direction = DIRECTION;
     }
 
     @Override
     public boolean isValidMove(int row, int col, Board board) {
-        return true;
+        if(direction == true){
+            return true;
+        }
+        else{
+            return true;
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package chessengine;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -14,30 +15,20 @@ import java.util.ArrayList;
 public abstract class Piece {
     
    int moveCount;
-   int Row;
-   int Col;
+   private Color color;
    ArrayList<int []> pieceHistory;
     
-   public Piece(int row, int column){
+   public Piece(Color c){
        moveCount = 0;
-       Row = row;
-       Col = column;
+       color = c;
    }
-   
-   public void move(int row, int column, Board board){
-       if(isValidMove(row, column, board)){
-           Row = row;
-           Col = column;
-           int [] arr = new int [2];
-           arr[0] = row;
-           arr[1] = column;
-           pieceHistory.add(arr);
-       }
+   public Color getColor(){
+       return color;
    }
-   
    @Override
    public abstract String toString();
    public abstract boolean isValidMove(int row, int column, Board board);
    public abstract ArrayList<int []> getValidMoves();
+   
    
 }

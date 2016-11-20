@@ -20,7 +20,7 @@ public class Queen extends Piece {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Queen";
     }
 
     @Override
