@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
     private boolean direction; //true = up | false = down
     
-    public Pawn(int[] STARTPOS, boolean DIRECTION) {
-        super(STARTPOS);
+    public Pawn(int row, int column, boolean DIRECTION) {
+        super(row, column);
         direction = DIRECTION;
     }
 
@@ -27,13 +27,17 @@ public class Pawn extends Piece {
     @Override
     public ArrayList<int[]> getValidMoves() {
         ArrayList<int []> ValidMoves = new ArrayList<>();
-        currentPos[0] += 1;
-        ValidMoves.add(currentPos);
+        
         return ValidMoves;
     }
 
     public boolean getDirection(){
         return direction;
+    }
+
+    @Override
+    public String toString() {
+        return "Pawn";
     }
     
 }
