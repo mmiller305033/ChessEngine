@@ -27,7 +27,7 @@ public class Board {
   
   public void movePiece(int pieceRow, int pieceColumn, int newRow, int newColumn){
       for(int i = 0; i < board[pieceRow][pieceColumn].getValidMoves().size(); i++){
-          if(board[pieceRow][pieceColumn].getValidMoves().get(i)[0] == newRow && board[pieceRow][pieceColumn].getValidMoves().get(i)[1] == newColumn ){
+          if(board[pieceRow][pieceColumn].getValidMoves().get(i)[0] == newRow && board[pieceRow][pieceColumn].getValidMoves().get(i)[1] == newColumn){
               board[newRow][newColumn] = board[pieceRow][pieceColumn];
               board[pieceRow][pieceColumn] = null;
               
