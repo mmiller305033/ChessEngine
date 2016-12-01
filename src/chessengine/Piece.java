@@ -13,22 +13,52 @@ import java.util.ArrayList;
  * @author Mark Miller
  */
 public abstract class Piece {
-    
-   int moveCount;
-   private Color color;
-   ArrayList<int []> pieceHistory;
-    
-   public Piece(Color c){
+    private boolean activated;
+    private int moveCount;
+    private int Row;
+    private int Column;
+    private Color color;
+   public Piece(Color c, int row, int column){
        moveCount = 0;
        color = c;
+       Row = row;
+       Column = column;
+       activated = false;
+   }
+   
+   @Override
+   public abstract String toString();
+   
+   public void activatePiece(){
+       activated = true;
+   }
+   public void deactivatePiece(){
+       activated = false;
+   }
+   public boolean getActivationStatus(){
+       return activated;
+   } 
+   public int getRow(){
+       return Row;
+   }
+   public int getColumn(){
+       return Column;
    }
    public Color getColor(){
        return color;
    }
-   @Override
-   public abstract String toString();
-   public abstract boolean isValidMove(int row, int column, Board board);
-   public abstract ArrayList<int []> getValidMoves();
+   public int getMoveCount(){
+       return moveCount;
+   }
+   public void setRow(int newRow){
+       Row = newRow;
+   }
+   public void setColumn(int newColumn){
+       Column = newColumn;
+   }
    
-   
+   public void incrementMoveCount(){
+       moveCount += 1;
+       
+   }
 }

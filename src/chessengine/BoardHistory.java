@@ -12,30 +12,42 @@ import java.awt.Color;
  * @author Mark Miller
  */
 public class BoardHistory {
-    private Color color;
     private Piece piece;
-    private int Row;
-    private int Column;
-    public BoardHistory(Color c, Piece p, int row, int column){
-        color = c;
+    private int newRow;
+    private int newColumn;
+    private int initialRow;
+    private int initialColumn;
+    public BoardHistory(Piece p, int initialrow, int initialcolumn ,int newrow, int newcolumn){
+        
         piece = p;
-        Row = row;
-        Column = column;
-    }
-    
-    public Color getColor(){
-        return color;
+        newRow = newrow;
+        newColumn = newcolumn;
+        initialRow = initialrow;
+        initialColumn = initialcolumn;
     }
     
     public Piece getPiece(){
         return piece;
     }
     
-    public int getRow(){
-        return Row;
+    public int getnewRow(){
+        return newRow;
     }
     
-    public int getColumn(){
-        return Column;
+    public int getnewColumn(){
+        return newColumn;
+    }
+    
+    @Override
+    public String toString(){
+       return "The " + getColor() + " " + piece.toString() + " from [" + initialRow +"," + initialColumn + "] moved to [" + newRow +"," + newColumn + "]";
+    }
+    public String getColor(){
+        if(piece.getColor() == Color.WHITE){
+            return "white";
+        }
+        else{
+            return "black";
+        }
     }
 }

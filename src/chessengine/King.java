@@ -14,8 +14,8 @@ import java.util.ArrayList;
  */
 public class King extends Piece {
 
-    public King(Color c) {
-        super(c);
+    public King(Color c, int row, int column) {
+        super(c, row, column);
     }
 
     @Override
@@ -23,14 +23,8 @@ public class King extends Piece {
         return "King";
     }
 
-    @Override
-    public boolean isValidMove(int row, int column, Board board) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
-    @Override
-    public ArrayList<int[]> getValidMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
 }

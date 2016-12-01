@@ -14,23 +14,12 @@ import java.util.ArrayList;
  */
 public class Rook extends Piece {
 
-    public Rook(Color c) {
-        super(c);
+    public Rook(Color c, int row, int column) {
+        super(c, row, column);
     }
 
     @Override
     public String toString() {
         return "Rook";
-    }
-
-    @Override
-    public boolean isValidMove(int row, int column, Board board) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<int[]> getValidMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    } 
 }

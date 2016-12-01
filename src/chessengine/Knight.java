@@ -12,15 +12,17 @@ import java.util.ArrayList;
  *
  * @author Mark Miller
  */
-public class Queen extends Piece {
+public class Knight extends Piece{
 
-    public Queen(Color c, int row, int column) {
+    public Knight(Color c, int row, int column) {
         super(c, row, column);
     }
 
     @Override
     public String toString() {
-        return "Queen";
+        return "Knight";
     }
 
+    
+    
 }
