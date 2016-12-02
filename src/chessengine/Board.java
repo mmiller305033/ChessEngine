@@ -47,8 +47,8 @@ public class Board {
         board[6][7] = new Pawn(Color.WHITE, 6, 7);
         board[7][0] = new Rook(Color.WHITE, 7, 0);
         board[7][1] = new Knight(Color.WHITE, 7, 1);
-        board[3][4] = new Bishop(Color.WHITE, 3, 4);
-        board[7][3] = new Queen(Color.WHITE, 7, 3);
+        board[7][2] = new Bishop(Color.WHITE, 7, 2);
+        board[7][3] = new Queen(Color.WHITE, 3, 4);
         board[7][4] = new King(Color.WHITE, 7, 4);
         board[7][5] = new Bishop(Color.WHITE, 7, 5);
         board[7][6] = new Knight(Color.WHITE, 7, 6);
@@ -248,12 +248,335 @@ public class Board {
     }
 
     //ONLY SEND KINGS
-    private ArrayList<int[]> getKingMoves(Piece p) {
-        return null;
+    public ArrayList<int[]> getKingMoves(Piece p) {
+        ArrayList<int[]> kingMoves = new ArrayList<>();
+        
+        //------------------------------------CASE: TOP LEFT CORNER---------------------------------------
+        if(p.getRow() == 0 && p.getColumn() == 0){ 
+            //CHECKS RIGHT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() + 1] == null || board[p.getRow()][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() + 1] == null || board[p.getRow() + 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn()] == null || board[p.getRow() + 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            } 
+        }
+        //-------------------------------------END TOP LEFT CORNER----------------------------------------
+        
+        //------------------------------------CASE: TOP RIGHT CORNER--------------------------------------
+        else if(p.getRow() == 0 && p.getColumn() == 7){
+            //CHECKS LEFT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() - 1] == null || board[p.getRow()][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() - 1] == null || board[p.getRow() + 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn()] == null || board[p.getRow() + 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+        }
+        //-------------------------------------END TOP RIGHT CORNER---------------------------------------
+        
+        //-----------------------------------CASE: BOTTOM RIGHT CORNER------------------------------------
+        else if(p.getRow() == 7 && p.getColumn() == 7){
+            //CHECKS LEFT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() - 1] == null || board[p.getRow()][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() - 1] == null || board[p.getRow() - 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn()] == null || board[p.getRow() - 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            
+        }
+        //------------------------------------END BOTTOM RIGHT CORNER-------------------------------------
+        
+        //------------------------------------CASE: BOTTOM LEFT CORNER------------------------------------
+        else if(p.getRow() == 7 && p.getColumn() == 0){
+            //CHECKS RIGHT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() + 1] == null || board[p.getRow()][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() + 1] == null || board[p.getRow() - 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn()] == null || board[p.getRow() - 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+        }
+        //-----------------------------------------CASE: TOP SIDE-----------------------------------------
+        else if(p.getRow() == 0){ 
+           //CHECKS LEFT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() - 1] == null || board[p.getRow()][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() - 1] == null || board[p.getRow() + 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn()] == null || board[p.getRow() + 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() + 1] == null || board[p.getRow() + 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() + 1] == null || board[p.getRow()][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+        }
+        
+        
+        //----------------------------------------CASE: RIGHT SIDE----------------------------------------
+        else if(p.getColumn() == 7){ 
+            //CHECKS UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn()] == null || board[p.getRow() - 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() - 1] == null || board[p.getRow() - 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() - 1] == null || board[p.getRow()][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() - 1] == null || board[p.getRow() + 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn()] == null || board[p.getRow() + 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+        }
+        
+        
+        //----------------------------------------CASE: BOTTOM SIDE---------------------------------------
+        else if(p.getRow() == 7){ 
+            //CHECKS LEFT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() - 1] == null || board[p.getRow()][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() - 1] == null || board[p.getRow() - 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn()] == null || board[p.getRow() - 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() + 1] == null || board[p.getRow() - 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() + 1] == null || board[p.getRow()][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+        }
+        
+        
+        //-----------------------------------------CASE: LEFT SIDE----------------------------------------
+        else if(p.getColumn() == 0){ 
+            //CHECKS UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn()] == null || board[p.getRow() - 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() + 1] == null || board[p.getRow() - 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() + 1] == null || board[p.getRow()][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() + 1] == null || board[p.getRow() + 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn()] == null || board[p.getRow() + 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+        }
+        //---------------------------------------CASE: NON-CORNER/EDGE------------------------------------
+        else{
+            //CHECKS UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn()] == null || board[p.getRow() - 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() + 1] == null || board[p.getRow() - 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() + 1] == null || board[p.getRow()][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS RIGHT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() + 1] == null || board[p.getRow() + 1][p.getColumn() + 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() + 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn()] == null || board[p.getRow() + 1][p.getColumn()].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn();
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, DOWN ONE FOR VALID MOVE
+            if(board[p.getRow() + 1][p.getColumn() - 1] == null || board[p.getRow() + 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() + 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE FOR VALID MOVE
+            if(board[p.getRow()][p.getColumn() - 1] == null || board[p.getRow()][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow();
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+            //CHECKS LEFT ONE, UP ONE FOR VALID MOVE
+            if(board[p.getRow() - 1][p.getColumn() - 1] == null || board[p.getRow() - 1][p.getColumn() - 1].getColor() != board[p.getRow()][p.getColumn()].getColor()){ 
+                int [] moves = new int [2];
+                moves[0] = p.getRow() - 1;
+                moves[1] = p.getColumn() - 1;
+                kingMoves.add(moves);
+            }
+        }
+            
+        return kingMoves;
     }
 
     //ONLY SEND QUEENS
-    private ArrayList<int[]> getQueenMoves(Piece p) {
+    public ArrayList<int[]> getQueenMoves(Piece p) {
         ArrayList<int[]> queenMoves = new ArrayList<>();
         
         //-----------------------------------RULE 1: MOVING UP/LEFT--------------------------------------------------
@@ -361,7 +684,7 @@ public class Board {
         //----------------------------------------END RULE 3---------------------------------------------------------
         
         
-        //-----------------------------------RULE 1: MOVING UP-------------------------------------------------------
+        //-----------------------------------RULE 4: MOVING UP-------------------------------------------------------
         if (p.getRow() != 0) {
             int i = 1;
             boolean hitPiece = false;
@@ -385,9 +708,9 @@ public class Board {
                 i++;
             }
         }
-        //---------------------------------------END RULE 1----------------------------------------------------------
+        //---------------------------------------END RULE 4----------------------------------------------------------
 
-        //-----------------------------------RULE 2: MOVING DOWN-----------------------------------------------------
+        //-----------------------------------RULE 5: MOVING DOWN-----------------------------------------------------
         if (p.getRow() != 7) {
             int i = 1;
             boolean hitPiece = false;
@@ -411,9 +734,9 @@ public class Board {
                 i++;
             }
         }
-        //---------------------------------------END RULE 2---------------------------------------------------------
+        //---------------------------------------END RULE 5---------------------------------------------------------
 
-        //-----------------------------------RULE 3: MOVING RIGHT---------------------------------------------------
+        //-----------------------------------RULE 6: MOVING RIGHT---------------------------------------------------
         if (p.getColumn() != 0) {
             int i = 1;
             boolean hitPiece = false;
@@ -437,9 +760,9 @@ public class Board {
                 i++;
             }
         }
-        //----------------------------------------END RULE 3---------------------------------------------------------
+        //----------------------------------------END RULE 6---------------------------------------------------------
 
-        //-----------------------------------RULE 4: MOVING LEFT-----------------------------------------------------
+        //-----------------------------------RULE 7: MOVING LEFT-----------------------------------------------------
         if (p.getRow() != 0) {
             int i = 1;
             boolean hitPiece = false;
@@ -463,13 +786,14 @@ public class Board {
                 i++;
             }
         }
-        //----------------------------------------END RULE 4---------------------------------------------------------
-        return null;
+        //----------------------------------------END RULE 7---------------------------------------------------------
+        return queenMoves;
     }
 
     //ONLY SEND BIHSOPS
     public ArrayList<int[]> getBishopMoves(Piece p) {
         ArrayList<int[]> bishopMoves = new ArrayList<>();
+        
         //-----------------------------------RULE 1: MOVING UP/LEFT--------------------------------------------------
         if (p.getRow() != 0 && p.getColumn() != 0) {
             int i = 1;
