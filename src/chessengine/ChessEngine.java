@@ -14,35 +14,38 @@ public class ChessEngine {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Scanner reader = new Scanner(System.in);
-      Board b = new Board();
-      b.printBoard();
-      int row = reader.nextInt();
-      int col = reader.nextInt();
-//      b.movePiece(b.board[reader.nextInt()][reader.nextInt()],reader.nextInt() , reader.nextInt());
-//       System.out.print("");
-//      b.printBoard();
-//      b.movePiece(b.board[reader.nextInt()][reader.nextInt()],reader.nextInt() , reader.nextInt());
-//       System.out.print("");
-//      b.printBoard();
-//      b.movePiece(b.board[reader.nextInt()][reader.nextInt()],reader.nextInt() , reader.nextInt());
-//       System.out.print("");
-//      b.printBoard();
-//      b.movePiece(b.board[reader.nextInt()][reader.nextInt()],reader.nextInt() , reader.nextInt());
-//       System.out.print("");
-//      b.printBoard();
-//      b.movePiece(b.board[reader.nextInt()][reader.nextInt()],reader.nextInt() , reader.nextInt());
-      //b.promotePawn(b.board[reader.nextInt()][reader.nextInt()], reader.next());
-      
-      int i = 0;
-      while(i < b.getBishopMoves(b.board[row][col]).size()){
-          System.out.println(Arrays.toString(b.getBishopMoves(b.board[row][col]).get(i)));
-          i++;
-      } 
-      
-      System.out.print("");
-      b.printBoard();
-      
+        
+       Board b = new Board();
+       Scanner reader = new Scanner(System.in);
+       while(b.isWinner() == false){
+           b.printBoard();
+           int row = reader.nextInt();
+           int column = reader.nextInt();
+           int newRow = reader.nextInt();
+           int newColumn = reader.nextInt();
+           b.movePiece(b.getPiece(row, column), newRow, newColumn);
+           b.printBoard();
+           if(reader.next().equals("history")){
+               int i = 0;
+               while(i < b.getHistory().size()){
+                   System.out.println(b.getHistory().get(i));
+                   i++;
+               }
+           }
+       }
+       
+
+         
+         
+       
+         
+         
+         
+     
     }
-    
 }
+
+      
+   
+    
+
