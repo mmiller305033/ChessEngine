@@ -47,6 +47,15 @@ public abstract class Piece {
    public Color getColor(){
        return color;
    }
+   public String colorToString(){
+       if(color == Color.WHITE){
+           return "white";
+       }
+       else if(color == Color.BLACK){
+           return "black";
+       }
+       return "";
+   }
    public int getMoveCount(){
        return moveCount;
    }
