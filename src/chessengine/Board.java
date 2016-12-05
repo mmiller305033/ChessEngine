@@ -59,13 +59,15 @@ public class Board {
     }
 
     public void printBoard() {
-        for (Piece[] board1 : board) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board1[j] != null) {
-                    System.out.print(board1[j].toString().substring(0, 1));
+                if (board[i][j] != null) {
+                    System.out.print(" ");
+                    System.out.print(board[i][j].colorToString().substring(0,1));
+                    System.out.print(board[i][j].toString().substring(0, 2));
                     System.out.print(" ");
                 } else {
-                    System.out.print("  ");
+                    System.out.print(" " + i + "," + j + " ");
                 }
             }
             System.out.println("");
@@ -73,17 +75,19 @@ public class Board {
     }
 
     public void movePiece(Piece piece, int newRow, int newColumn) {
-        System.out.println("Checking legal move");
-        if (isLegalMove(piece, newRow, newColumn)) {
-            history.add(new BoardHistory(piece, piece.getRow(), piece.getColumn(), newRow, newColumn)); //creates a BoardHistory object to store all moves made over the course of the game
-            System.out.println("History Added");
-            addPiece(board[piece.getRow()][piece.getColumn()], newRow, newColumn);
-            System.out.println("Piece Added");
-            removePiece(piece);
-            System.out.println("Piece removed");
-            piece.setColumn(newColumn);
-            piece.setRow(newRow);
-            piece.incrementMoveCount();
+        if (whoseTurn().toLowerCase().equals(piece.colorToString().toLowerCase())) {
+            if (isLegalMove(piece, newRow, newColumn)) {
+                history.add(new BoardHistory(piece, piece.getRow(), piece.getColumn(), newRow, newColumn)); //creates a BoardHistory object to store all moves made over the course of the game
+                addPiece(board[piece.getRow()][piece.getColumn()], newRow, newColumn); //Adds the piece to a new position
+                removePiece(piece);
+                piece.setColumn(newColumn);    //reassigns the piece's row and column variables
+                piece.setRow(newRow);
+                piece.incrementMoveCount();    //Increases the specific piece's move count by one
+                turnCount++;                   //increase the turn by one
+            }
+        }
+        else{
+            System.out.println("It is currently " + whoseTurn() + "'s turn.  You can't move that piece yet.");
         }
     }
 
@@ -173,11 +177,11 @@ public class Board {
             inCheck = false;
             while (checkCount < opponentsNextMoves.size()) {
                 if (p.getColor() == Color.WHITE) {
-                    if (opponentsNextMoves.get(checkCount)[0] == findWhiteKing()[0] && opponentsNextMoves.get(checkCount)[1] == findWhiteKing()[1]) {
+                    if (opponentsNextMoves.get(checkCount)[0] == findWhiteKing(tempBoard)[0] && opponentsNextMoves.get(checkCount)[1] == findWhiteKing(tempBoard)[1]) {
                         inCheck = true;
                     }
                 } else if (p.getColor() == Color.BLACK) {
-                    if (opponentsNextMoves.get(checkCount)[0] == findBlackKing()[0] && opponentsNextMoves.get(checkCount)[1] == findBlackKing()[1]) {
+                    if (opponentsNextMoves.get(checkCount)[0] == findBlackKing(tempBoard)[0] && opponentsNextMoves.get(checkCount)[1] == findBlackKing(tempBoard)[1]) {
                         inCheck = true;
                     }
                 }
@@ -199,7 +203,7 @@ public class Board {
         p.setColumn(tempColumn);
         return legalMoves;
     }
-    public int[] findWhiteKing(){
+    public int[] findWhiteKing(Piece[][] board){
         int [] kingCoordinates = new int [2];
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -213,7 +217,7 @@ public class Board {
         return null;
     }
     
-    public int[] findBlackKing(){
+    public int[] findBlackKing(Piece[][] board){
         int [] kingCoordinates = new int [2];
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -235,7 +239,7 @@ public class Board {
             if (p.getColor() == Color.WHITE) {
                 if (p.getRow() != 0) {
                     //--------------------RULE 1: FIRST MOVE FOR WHITE.  UP 1 OR UP 2.--------------------------------------
-                    if (p.getMoveCount() == 0) {
+                    if (p.getMoveCount() == 0  && b[p.getRow() - 1][p.getColumn()] == null && b[p.getRow() - 2][p.getColumn()] == null) {
                         int[] moves = new int[2];
                         moves[0] = p.getRow() - 1;
                         moves[1] = p.getColumn();
@@ -295,7 +299,7 @@ public class Board {
             //--------------------------------------------------BLACK MOVES----------------------------------------------------
             else if (p.getRow() != 7) {
                 //-------------------------------RULE 1: FIRST MOVE FOR BLACK.  DOWN 1 OR DOWN 2.------------------------------
-                if (p.getMoveCount() == 0) { 
+                if (p.getMoveCount() == 0  && b[p.getRow() + 1][p.getColumn()] == null && b[p.getRow() + 2][p.getColumn()] == null) { 
                     int[] moves = new int[2];
                     moves[0] = p.getRow() + 1;
                     moves[1] = p.getColumn();
@@ -941,11 +945,11 @@ public class Board {
                     moves[1] = p.getColumn() - i;
                     bishopMoves.add(moves);
                 } 
-                else if (b[p.getRow() + i][p.getColumn() - i].getColor() == b[p.getRow()][p.getColumn()].getColor()) { //IF THE PIECE BELOW IS THE SAME COLOR IT IS NOT A VALID MOVE.
-                    hitPiece = true;                                                                                       //THE WHILE LOOP WILL STOP SEARCHING FOR MOVES.
+                else if (b[p.getRow() + i][p.getColumn() - i].getColor() == b[p.getRow()][p.getColumn()].getColor()) {
+                    hitPiece = true;                                                                                       
                 } 
-                else if (b[p.getRow() + i][p.getColumn() - i].getColor() != b[p.getRow()][p.getColumn()].getColor()) { //IF THE PIECE BELOW IS NOT THE SAME COLOR IT IS A VALID MOVE.
-                    hitPiece = true;                                                                                       //THE WHILE LOOP WILL STOP SEARCHING FOR MOVES.
+                else if (b[p.getRow() + i][p.getColumn() - i].getColor() != b[p.getRow()][p.getColumn()].getColor()) { 
+                    hitPiece = true;                                                                                      
                     int[] moves = new int[2];
                     moves[0] = p.getRow() + i;
                     moves[1] = p.getColumn() - i;
@@ -960,18 +964,18 @@ public class Board {
         if (p.getColumn() != 0) {
             int i = 1;
             boolean hitPiece = false;
-            while (hitPiece == false && (p.getColumn() + i < 7) && (p.getRow() > 0)) {
-                if (b[p.getRow() - i][p.getColumn() + i] == null) { //IF THERE IS NO PIECE BELOW THEN IT IS A VALID MOVE.
+            while (hitPiece == false && (p.getColumn() + i < 7) && (p.getRow() - i > 0)) {
+                if (b[p.getRow() - i][p.getColumn() + i] == null) { 
                     int[] moves = new int[2];
                     moves[0] = p.getRow() - i;
                     moves[1] = p.getColumn() + i;
                     bishopMoves.add(moves);
                 } 
-                else if (b[p.getRow() - i][p.getColumn() + i].getColor() == b[p.getRow()][p.getColumn()].getColor()) { //IF THE PIECE TO THE RIGHT IS THE SAME COLOR IT IS NOT A VALID MOVE.
-                    hitPiece = true;                                                                                         //THE WHILE LOOP WILL STOP SEARCHING FOR MOVES.
+                else if (b[p.getRow() - i][p.getColumn() + i].getColor() == b[p.getRow()][p.getColumn()].getColor()) { 
+                    hitPiece = true;                                                                                         
                 } 
-                else if (b[p.getRow() - i][p.getColumn() + i].getColor() != b[p.getRow()][p.getColumn()].getColor()) { //IF THE PIECE TO THE RIGHT IS NOT THE SAME COLOR IT IS A VALID MOVE.
-                    hitPiece = true;                                                                                         //THE WHILE LOOP WILL STOP SEARCHING FOR MOVES.
+                else if (b[p.getRow() - i][p.getColumn() + i].getColor() != b[p.getRow()][p.getColumn()].getColor()) { 
+                    hitPiece = true;                                                                                       
                     int[] moves = new int[2];
                     moves[0] = p.getRow() - i;
                     moves[1] = p.getColumn() + i;
@@ -993,11 +997,11 @@ public class Board {
                     moves[1] = p.getColumn() + i;
                     bishopMoves.add(moves);
                 } 
-                else if (b[p.getRow() + i][p.getColumn() + i].getColor() == b[p.getRow()][p.getColumn()].getColor()) { //IF THE PIECE TO THE RIGHT IS THE SAME COLOR IT IS NOT A VALID MOVE.
-                    hitPiece = true;                                                                                         //THE WHILE LOOP WILL STOP SEARCHING FOR MOVES.
+                else if (b[p.getRow() + i][p.getColumn() + i].getColor() == b[p.getRow()][p.getColumn()].getColor()) { 
+                    hitPiece = true;                                                                                         
                 } 
-                else if (b[p.getRow() + i][p.getColumn() + i].getColor() != b[p.getRow()][p.getColumn()].getColor()) { //IF THE PIECE TO THE RIGHT IS NOT THE SAME COLOR IT IS A VALID MOVE.
-                    hitPiece = true;                                                                                         //THE WHILE LOOP WILL STOP SEARCHING FOR MOVES.
+                else if (b[p.getRow() + i][p.getColumn() + i].getColor() != b[p.getRow()][p.getColumn()].getColor()) { 
+                    hitPiece = true;                                                                                         
                     int[] moves = new int[2];
                     moves[0] = p.getRow() + i;
                     moves[1] = p.getColumn() + i;
@@ -1253,11 +1257,27 @@ public class Board {
     }
 
     public boolean isWinner() {
+        if(getWinner().equals("White") || getWinner().equals("Black")){
+            return true;
+        }
         return false;
     }
 
     public String getWinner() {
-        return "no winner";
+        if (inCheck(Color.BLACK) == true && getLegalMoves(board[findBlackKing(board)[0]][findBlackKing(board)[1]]) == null) {
+            return "White has won the game";
+        }
+        else if (inCheck(Color.WHITE) == true && getLegalMoves(board[findWhiteKing(board)[0]][findWhiteKing(board)[1]]) == null) {
+            return "Black has won the game";
+        }
+        if(findBlackKing(board) == null){
+            return "White has won the game";
+        }
+        if(findWhiteKing(board) == null){
+            return "Black has won the game";
+        }
+
+        return "The game has ended in a draw";
     }
     
     public ArrayList<BoardHistory> getHistory(){
@@ -1266,5 +1286,67 @@ public class Board {
     
     public Piece getPiece(int row, int column){
         return board[row][column];
+    }
+    
+    public String whoseTurn(){
+        if(turnCount % 2 == 0){
+            return "White";
+        }
+        else{
+            return "Black";
+        }
+    }
+    
+    public boolean inCheck(Color c){
+        ArrayList<int[]> opponentsNextMoves = new ArrayList<>();
+        boolean inCheck = false;
+        
+        if(c == Color.BLACK){
+        //IN CHECK FOR BLACK
+        for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) { //NESTED FOR LOOP TO CHECK EACH PIECE
+                    if (board[i][j] != null && board[i][j].getColor() != Color.BLACK) {
+                        int tempMoveCount = 0;
+                        while (tempMoveCount < getValidMoves(board[i][j], board).size()) {  //GETS ALL VALID MOVES FOR EACH OPPOSING PIECE ON THE BOARD
+                            opponentsNextMoves.add(getValidMoves(board[i][j], board).get(tempMoveCount));
+                            tempMoveCount++;
+                        }
+                    }
+                }
+            }
+        }
+        else if(c == Color.WHITE){
+        //IN CHECK FOR WHITE
+        for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) { //NESTED FOR LOOP TO CHECK EACH PIECE
+                    if (board[i][j] != null && board[i][j].getColor() != Color.WHITE) {
+                        int tempMoveCount = 0;
+                        while (tempMoveCount < getValidMoves(board[i][j], board).size()) {  //GETS ALL VALID MOVES FOR EACH OPPOSING PIECE ON THE BOARD
+                            opponentsNextMoves.add(getValidMoves(board[i][j], board).get(tempMoveCount));
+                            tempMoveCount++;
+                        }
+                    }
+                }
+            }
+        }
+        int i = 0;
+        while( i < opponentsNextMoves.size()){
+            if (c == Color.WHITE) {
+                if (findWhiteKing(board) != null) {
+                    if (opponentsNextMoves.get(i)[0] == findWhiteKing(board)[0] && opponentsNextMoves.get(i)[1] == findWhiteKing(board)[1]) {
+                        inCheck = true;
+                    }
+                }
+            }
+            else if (c == Color.BLACK) {
+                if (findBlackKing(board) != null) {
+                    if (opponentsNextMoves.get(i)[0] == findBlackKing(board)[0] && opponentsNextMoves.get(i)[1] == findBlackKing(board)[1]) {
+                        inCheck = true;
+                    }
+                }
+            }
+            i++;
+        }
+        return inCheck;
     }
 }
