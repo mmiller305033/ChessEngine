@@ -1,0 +1,28 @@
+	Project Summary:
+Title: Chess Simulator
+Description: A Game of chess that two people can play locally that will encorporate all the different aspects of a game of chess
+Solves: Is a good form of entertainment for many people
+Technologies: Files-Save and load games.  GUI-People can see their pieces and move their pieces
+
+	Case Analysis:
+The user will have a menu screen with 3 buttons displaying a "new game" button, a "load game" button, and an "instructions" button
+If the user hits the play button it will load a new game of chess.  This screen will have the board and all the pieces on it.
+It will have a menu bar at the top where the user can save, load, or start a new game.  This game will be two players.  
+Each player will take turns playing the game.
+
+	Data Design:
+The important data that is involved in this program is the user input.  This data will be stored through serializable objects.
+The best way to represent this data is through the use of objects.  The data will need to be some what persistent
+because it will need to be able to load games, same games, and create new games.
+The data will need to be aggregated into a structure because you can have many different types of pieces on a single board.
+Also a board will have two players.
+
+	UI Design:
+A main screen with 3 buttons; New Game, Load Game, and Instructions.
+	
+	Algorithims:
+getPossibleMoves()-based on each piece, give each piece object specific rules as to how they are able to move.
+
+	General Thoughts:
+Objects needed- Abstract class called piece, piece can have many different extensions.  King, Queen, Rook, Bishop, Knight, and Pawn will all extend the piece class
+There will also be a board class with all the pieces declared inside it. 
