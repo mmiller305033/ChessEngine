@@ -1,0 +1,105 @@
+	                  ChessEngine 1.0 Alpha
+
+Description: This project is a 2 player text based Chess Game for 
+	     the Command Line/Console/Terminal and it adheres to 
+	     the standard rules of chess.
+
+Intended User: The intended user for this program is anyone who
+	       who enjoys playing chess, however there is also
+	       code that could be re-used by developers who want
+	       to write their own chess game.
+
+Problem Solved: This program will solve the inevitable problem of boredom.
+
+Technologies: (Java 8) - Used to write the code. 
+	      (Console/Command Prompt/terminal) - Needed to run the program.
+
+Case Analysis: This game is text based so to move a piece the program expects
+	       4 pieces of user input to move a piece. The row of the piece
+	       they would like to select, the column of the piece they would
+               like to select, the row they would like to move said piece to
+	       and the column they would like to move said piece to.
+
+	       Example input: (6 0 5 0) 
+	       This input would move the piece at [6,0] to the position [5,0] on the board.
+
+	       Example output:	
+	       The white Pawn from [6,0] moved to [5,0]
+	
+ 	       bRo  bKn  bBi  bQu  bKi  bBi  bKn  bRo
+	       bPa  bPa  bPa  bPa  bPa  bPa  bPa  bPa
+ 	       2,0  2,1  2,2  2,3  2,4  2,5  2,6  2,7
+               3,0  3,1  3,2  3,3  3,4  3,5  3,6  3,7
+               4,0  4,1  4,2  4,3  4,4  4,5  4,6  4,7
+               wPa  5,1  5,2  5,3  5,4  5,5  5,6  5,7
+               6,0  wPa  wPa  wPa  wPa  wPa  wPa  wPa
+               wRo  wKn  wBi  wQu  wKi  wBi  wKn  wRo
+	       
+	       Since the White pawn just move it would then switch to the Black's turn.
+	       Black would then put in input in the same format as above to move.
+	       NOTE: you may only move white or black piece if it is their specific turn.
+		     turns alternate.
+
+UI Design: The program opens with a console message explaining how to move
+	   a piece, then it prints the current board.  When a board is printed,
+	   a  text based representation of the board becomes visible.  The format
+	   for this board is as follows: black pieces - Black pieces show the letter b
+	   followed by the first two letters of the piece (Ex. bPa) = Black Pawn
+	   white pieces - White Pieces show the letter w followed by the first two 
+	   letters of that piece (Ex. wKi) = White King.  No Piece - If there is no piece 
+	   at a given location, then the coordinates of that location will be printed.
+	   (Ex. 3,3) = No Piece at position 3,3.
+
+	       EXAMPLE BOARD:
+
+ 	       bRo  bKn  bBi  bQu  bKi  bBi  bKn  bRo
+	       bPa  bPa  bPa  bPa  bPa  bPa  bPa  bPa
+ 	       2,0  2,1  2,2  2,3  2,4  2,5  2,6  2,7
+               3,0  3,1  3,2  3,3  3,4  3,5  3,6  3,7
+               4,0  4,1  4,2  4,3  4,4  4,5  4,6  4,7
+               5,0  5,1  5,2  5,3  5,4  5,5  5,6  5,7
+               wPa  wPa  wPa  wPa  wPa  wPa  wPa  wPa
+               wRo  wKn  wBi  wQu  wKi  wBi  wKn  wRo
+
+Data Design: This program takes keen advantage of inheritance, polymorphism, and ArrayLists.
+	     There are 10 different Classes that are used. 
+	     NOTE: ALL METHOD DESCRIPTIONS AND PROPERTIES FOR EACH CLASS WILL BE IN THEIR RESPECTIVE
+		   ALGORITHM SECTION PROCEDING THE DATA DESIGN SECTION.
+ 
+	     Piece.java: This is an abstract class with built in methods and properties
+			 that are meant to be utilized by other specific Pieces (i.e. King, Queen...)
+	     King.java: Inherits all Piece properties but includes its own toString() method
+	     Queen.java: Inherits all Piece properties but includes its own toString() method
+	     Knight.java: Inherits all Piece properties but includes its own toString() method
+	     Bishop.java: Inherits all Piece properties but includes its own toString() method
+	     Rook.java: Inherits all Piece properties but includes its own toString() method
+	     Pawn.java: Inherits all Piece properties but includes its own toString() method
+	     Board.java: This class contains all methods needed to replicate a game of chess.
+			 It also utilizes the Piece class by having a 2-D array of Pieces used
+	   		 to hold any necessary Pieces(i.e. King, Queen...)
+			 This class also utilizes the BoardHistory class by holding an ArrayList
+			 BoardHistory's so that it is possible to print a History of the current game
+	     BoardHistory.java: This class keeps stores a move.  It contains what piece moved,
+				the starting position of that piece [row,column] and the position
+				that piece moved to [newRow,newColumn].
+ 	     ChessEngine.java: This class contains the main method used for running the application.
+			       This class allows you to play a full game of chess with two human players
+			       by alternating turns between Black and White.
+
+Algorithms: This section will provide all methods for each designated class
+	   
+	   Piece.java: Methods - toString(), activatePiece(), deactivatePiece(), getActivationStatus(),
+				 getRow(), getColumn(), getColor(), colorToString().
+
+	   ALL PIECES: toString() -each different type of piece inherits the Piece.java's methods and only differ by the toString() method
+
+	   Board.java: printBoard(), movePiece(Piece piece, int newRow, int newColumn), addPiece(Piece p, int Row, int Column),
+		       removePiece(Piece p),isLegalMove(Piece p, int newRow, int newColumn),ArrayList<int[]> getValidMoves(Piece p, Piece [][] b),
+		       public int[] findWhiteKing(Piece[][] board),public int[] findBlackKing(Piece[][] board),private ArrayList<int[]> getPawnMoves(Piece p, Piece [][] b),
+		       private ArrayList<int[]> getKingMoves(Piece p, Piece [][] b),private ArrayList<int[]> getQueenMoves(Piece p, Piece [][] b),
+		       private ArrayList<int[]> getBishopMoves(Piece p, Piece [][] b),private ArrayList<int[]> getRookMoves(Piece p, Piece [][] b),
+		       public void promotePawn(Piece p, String newPiece),public boolean isWinner(),public String getWinner(),public ArrayList<BoardHistory> getHistory(),
+		       public Piece getPiece(int row, int column),public String whoseTurn(),public boolean inCheck(Color c).
+
+	   BoardHistory.java: public Piece getPiece(),public int getnewRow(),public int getnewColumn(),public String toString(),public String getColor()
+	   ChessEngine.java: public static void main(String[] args).
